@@ -1,0 +1,33 @@
+# Verilator
+obj_dir/
+*.vcd
+*.fst
+*.vvp
+
+# Logs
+*.log
+dbg.log
+debug.log
+trace.log
+topc.log
+topmem.log
+mcl1d.log
+
+# Build artifacts
+*.o
+*.so
+*.a
+build/
+
+# Editor
+*.swp
+*~
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
