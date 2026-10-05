@@ -75,6 +75,13 @@ Every external consumer connects through a well-defined port group. No module ne
 | MMU | Integrated (CSR-configurable) |
 | MESI | Standalone module |
 
+**Note on extension enablement:** The A (atomic) and V (vector)
+extensions are implemented as separate modules, but they are **not
+enabled by default** in the top-level core. To use them, the consumer
+must make a **small modification to the core's top-level wiring** to
+connect the extension ports and enable the corresponding CSR bits. See
+the A and V extension modules for the exact port list.
+
 ## Verification & Testing
 
 The design has been verified with a comprehensive testbench suite, located in the `pace_tb/` directory. Every major module and subsystem has at least one dedicated testbench, plus multiple integration tests covering cross-module behavior. All simulation is done with **Verilator**.
