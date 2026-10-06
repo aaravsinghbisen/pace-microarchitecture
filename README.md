@@ -42,22 +42,18 @@ A **Shadow RF** holds scout-produced values. Besides operands, it stores **memor
 
 ## Memory Subsystem
 
-- **L1I / L1D** — per-core instruction and data caches
-- **L2** — shared unified cache
-- **MESI** coherence controller
-- **Sv39 MMU** with:
-  - L1 and L2 TLBs
-  - Page-table walker
-  - Instruction and data MMU wrappers
+- **L1I / L1D / L2** — integrated in top-level (with MMU wrappers)
+- **MESI coherence** — implemented as a standalone module; not yet integrated into the top-level core.
+- **Sv39 MMU** — integrated (L1I/L1D MMU, TLB L1/L2, walker). CSR hookup (satp, priv_mode) partially complete.
 
 ## Extensions & Interfaces
 
 The core is **modular by design** — all extension points are exposed as clean inputs/outputs:
 
-- **Extension A** — atomic operations unit
-- **Extension V** — vector ALU, vector register file, vector CSRs
-- **Caches / RAM** — pluggable memory hierarchy
-- **Peripherals** — Linux-capable UART, CLINT, PLIC
+- **Extension A** — atomic operations unit (partial support)
+- **Extension V** — vector ALU, vector register file, vector CSRs (partial support)
+- **Caches / RAM** — L1I, L1D, L2 integrated in top-level
+- **Peripherals** — MMIO + interrupt interfaces for Linux-style peripherals. UART, CLINT, PLIC are provided as separate modules in pace_peripherals/ (not part of the core).
 
 ### Exposed Ports — Pluggable Consumers
 
@@ -153,10 +149,10 @@ pace_project/
 - Scout-based pre-computation (PCU / M-Core / B-Core) at 2× clock
 - AO-Cores for real execution with stall decoupling
 - Shadow Register File with memory address tagging
-- Atomic extension (A)
-- Vector extension (V)
-- Sv39 MMU (L1I/L1D MMU, TLB L1/L2, walker)
-- MESI cache coherence (L1I, L1D, L2)
+- Atomic extension (A) — partial support
+- Vector extension (V) — partial support
+- Sv39 MMU (L1I/L1D MMU, TLB L1/L2, walker) — integrated, CSR hookup partial
+- MESI cache coherence — standalone module, not yet integrated
 - Runahead execution with MSHR tracking
 - Performance counters
 - Trap & CSR handling with boot sequencer
